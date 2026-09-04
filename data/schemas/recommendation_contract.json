@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsightPilot AI — Recommendation Contract",
+  "description": "Contract defining deterministic prescriptive action recommendations linked to explanatory drivers.",
+  "version": "2.0.0",
+  "type": "object",
+  "properties": {
+    "recommendation_id": {
+      "type": "string",
+      "example": "REC-2026-NAE-001"
+    },
+    "kpi_id": {
+      "type": "string",
+      "example": "north_america_east_revenue"
+    },
+    "driver_id": {
+      "type": "string",
+      "example": "atlanta_dc_stockout"
+    },
+    "driver_name": {
+      "type": "string",
+      "example": "Atlanta DC Stockout"
+    },
+    "controllability": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"],
+      "example": "HIGH"
+    },
+    "controllable_lever": {
+      "type": "string",
+      "example": "Inventory Availability / Inter-DC Stock Rebalancing"
+    },
+    "action": {
+      "type": "string",
+      "example": "Execute Emergency Inventory Transfer from Charlotte Hub to Atlanta DC"
+    },
+    "rationale": {
+      "type": "string",
+      "example": "Restores Atlanta-DC-01 inventory availability from 72% to 90%+, unlocking 20,000 unit backlog."
+    },
+    "expected_impact": {
+      "type": "object",
+      "properties": {
+        "revenue_recovery_usd": {
+          "type": "number",
+          "example": 550000.0
+        },
+        "margin_impact_pct": {
+          "type": "number",
+          "example": 1.2
+        },
+        "recovery_timeframe_days": {
+          "type": "integer",
+          "example": 14
+        }
+      },
+      "required": ["revenue_recovery_usd", "margin_impact_pct", "recovery_timeframe_days"]
+    },
+    "owner": {
+      "type": "string",
+      "example": "Supply Chain / Operations"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+      "example": "CRITICAL"
+    },
+    "priority_rank": {
+      "type": "integer",
+      "example": 1
+    },
+    "confidence": {
+      "type": "object",
+      "properties": {
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "example": 91
+        },
+        "label": {
+          "type": "string",
+          "enum": ["HIGH", "MEDIUM", "LOW"],
+          "example": "HIGH"
+        }
+      },
+      "required": ["score", "label"]
+    },
+    "supporting_evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": ["EVID_ERP_ATL_STOCKOUT_001", "EVID_ERP_TRANSFER_LOG_002"]
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "overlap_group": {
+      "type": "string",
+      "example": "FULFILLMENT_RECOVERY"
+    }
+  },
+  "required": [
+    "recommendation_id",
+    "kpi_id",
+    "driver_id",
+    "driver_name",
+    "controllability",
+    "controllable_lever",
+    "action",
+    "rationale",
+    "expected_impact",
+    "owner",
+    "priority",
+    "priority_rank",
+    "confidence",
+    "supporting_evidence_ids",
+    "assumptions"
+  ]
+}

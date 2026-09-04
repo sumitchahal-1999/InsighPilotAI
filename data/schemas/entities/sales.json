@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sales Entity Schema",
+  "description": "Represents product unit delivery and sales transaction line items in the CRM/Sales domain.",
+  "type": "object",
+  "properties": {
+    "sales_item_id": {
+      "type": "string",
+      "description": "Unique sales order line item ID",
+      "example": "SLS-2026-NAE-119283"
+    },
+    "order_id": {
+      "type": "string",
+      "description": "Reference sales order identifier",
+      "example": "SO-2026-99210"
+    },
+    "transaction_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of transaction completion",
+      "example": "2026-08-10"
+    },
+    "region": {
+      "type": "string",
+      "description": "Geographic sales region",
+      "example": "NA-East"
+    },
+    "distributor_id": {
+      "type": "string",
+      "description": "Wholesale distributor account identifier",
+      "example": "DIST-APEX-EAST"
+    },
+    "sku_id": {
+      "type": "string",
+      "description": "Stock Keeping Unit identifier",
+      "example": "SKU-8821"
+    },
+    "units_ordered": {
+      "type": "integer",
+      "description": "Total units requested in original order",
+      "example": 2500
+    },
+    "units_sold": {
+      "type": "integer",
+      "description": "Total units physically fulfilled and sold",
+      "example": 1750
+    },
+    "unit_price": {
+      "type": "number",
+      "description": "Contractual unit selling price in USD",
+      "example": 120.0
+    },
+    "total_item_revenue": {
+      "type": "number",
+      "description": "Total realized revenue for this line item (units_sold * unit_price)",
+      "example": 210000.0
+    },
+    "delivery_status": {
+      "type": "string",
+      "enum": ["DELIVERED", "PARTIAL", "BACKORDERED", "CANCELLED"],
+      "description": "Fulfillment status of the sales line item",
+      "example": "PARTIAL"
+    }
+  },
+  "required": [
+    "sales_item_id",
+    "order_id",
+    "transaction_date",
+    "region",
+    "distributor_id",
+    "sku_id",
+    "units_ordered",
+    "units_sold",
+    "unit_price",
+    "delivery_status"
+  ]
+}

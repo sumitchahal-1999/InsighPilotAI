@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Support Ticket Entity Schema",
+  "description": "Represents customer and distributor escalations logged in Zendesk/ServiceNow.",
+  "type": "object",
+  "properties": {
+    "ticket_id": {
+      "type": "string",
+      "description": "Unique support desk ticket identifier",
+      "example": "ZD-TK-2026-8812"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when ticket was raised",
+      "example": "2026-08-12T14:32:00Z"
+    },
+    "region": {
+      "type": "string",
+      "description": "Commercial sales region",
+      "example": "NA-East"
+    },
+    "source_entity": {
+      "type": "string",
+      "description": "Distributor or customer account raising escalation",
+      "example": "DIST-EAST-ATL"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["FULFILLMENT_DELAY", "STOCKOUT_COMPLAINT", "PRICE_DISPUTE", "PRODUCT_QUALITY"],
+      "description": "Issue classification",
+      "example": "STOCKOUT_COMPLAINT"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+      "description": "Escalation priority",
+      "example": "CRITICAL"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Ticket summary header",
+      "example": "Emergency: Atlanta DC Stockout impacting 12 retail sub-accounts"
+    },
+    "content_summary": {
+      "type": "string",
+      "description": "Detailed text of customer complaint or signal",
+      "example": "Distributor reports inability to fulfill retail commitments for SKU-8821 due to depleted stock at Atlanta DC."
+    },
+    "sentiment_score": {
+      "type": "number",
+      "description": "Extracted NLP sentiment polarity score (-1.0 to +1.0)",
+      "example": -0.82
+    }
+  },
+  "required": [
+    "ticket_id",
+    "created_at",
+    "region",
+    "source_entity",
+    "category",
+    "severity",
+    "subject",
+    "content_summary"
+  ]
+}

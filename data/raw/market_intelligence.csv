@@ -1,0 +1,13 @@
+report_id,captured_date,competitor_name,competing_product,target_geography,promotional_action,observed_price_usd,baseline_price_usd,source_channel
+MKT-INTEL-101,2026-07-22,Horizon Foods Ltd.,Horizon PurePro 500 (Alternative to SKU-8821),Mid-Atlantic Corridor,15% Promotional Price Cut on Bulk Industrial Orders,102.0,120.0,Wholesale Channel Price Scraper
+MKT-INTEL-102,2026-07-28,Horizon Foods Ltd.,Horizon PurePro 500 (Alternative to SKU-8821),Southeast-ATL Territory,Direct Distributor Incentive Program - 15% Invoice Discount,102.0,120.0,Field Sales Intelligence Audit
+MKT-INTEL-103,2026-08-05,Horizon Foods Ltd.,Horizon PurePro 500 (Alternative to SKU-8821),NA-East Region,Q3 National Volume Promotion - 90 Day Price Lock ($102/unit),102.0,120.0,Chemical & Lubricant Weekly Benchmark Report
+MKT-INTEL-104,2026-08-12,Horizon Foods Ltd.,Horizon PurePro 500 (Alternative to SKU-8821),Mid-Atlantic & Southeast Corridor,Active poaching of backordered Tier-1 wholesale accounts with $102 pricing,102.0,120.0,Distributor Feedback & Scraping Feed
+MKT-INTEL-105,2026-08-19,Horizon Foods Ltd.,Horizon PurePro 500 (Alternative to SKU-8821),Carolinas Territory,Competitor field representatives offering instant freight subsidies and $102 unit price,102.0,120.0,Wholesale Price Scraper
+MKT-INTEL-106,2025-08-10,Vanguard Chemical Co.,Vanguard Chemical Co. Equivalent to SKU-8821,North America General,Standard market list pricing,123.51,120.0,Industry Trade Publication Scrape
+MKT-INTEL-107,2025-09-09,Apex Fluid Technologies,Apex Fluid Technologies Equivalent to SKU-2205,North America General,Standard market list pricing,65.3,65.0,Industry Trade Publication Scrape
+MKT-INTEL-108,2025-12-08,Vanguard Chemical Co.,Vanguard Chemical Co. Equivalent to SKU-2205,North America General,Standard market list pricing,64.25,65.0,Industry Trade Publication Scrape
+MKT-INTEL-109,2025-12-18,Vanguard Chemical Co.,Vanguard Chemical Co. Equivalent to SKU-5520,North America General,Standard market list pricing,108.24,110.0,Industry Trade Publication Scrape
+MKT-INTEL-110,2026-03-28,Pinnacle Lubricants,Pinnacle Lubricants Equivalent to SKU-4410,North America General,Standard market list pricing,87.52,85.0,Industry Trade Publication Scrape
+MKT-INTEL-111,2026-04-07,Pinnacle Lubricants,Pinnacle Lubricants Equivalent to SKU-4410,North America General,Standard market list pricing,84.1,85.0,Industry Trade Publication Scrape
+MKT-INTEL-112,2026-08-15,Pinnacle Lubricants,Pinnacle Lubricants Equivalent to SKU-4410,North America General,Standard market list pricing,82.64,85.0,Industry Trade Publication Scrape

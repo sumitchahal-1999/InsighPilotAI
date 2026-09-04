@@ -1,0 +1,3 @@
+"""
+InsightPilot AI — Application Package
+"""

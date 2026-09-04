@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsightPilot AI — Confidence & Abstention Contract",
+  "description": "Schema defining confidence metrics, threshold bands, and abstention rules for prototype decision-intelligence.",
+  "version": "2.0.0",
+  "type": "object",
+  "properties": {
+    "score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Calculated confidence score on a 0-100 scale",
+      "example": 91
+    },
+    "label": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"],
+      "description": "Confidence classification label",
+      "example": "HIGH"
+    },
+    "explanation": {
+      "type": "string",
+      "description": "Deterministic rationale for assigned confidence score",
+      "example": "High confidence based on direct ERP telemetry logs, high corroborating evidence count (3 systems), and zero conflicting signals."
+    },
+    "evidence_count": {
+      "type": "integer",
+      "description": "Number of independent validated evidence nodes supporting the finding",
+      "example": 4
+    },
+    "confidence_threshold": {
+      "type": "object",
+      "properties": {
+        "high_min": {
+          "type": "integer",
+          "default": 80,
+          "description": "Minimum score for HIGH confidence designation"
+        },
+        "medium_min": {
+          "type": "integer",
+          "default": 65,
+          "description": "Minimum score for MEDIUM confidence designation"
+        },
+        "low_max": {
+          "type": "integer",
+          "default": 64,
+          "description": "Scores below this threshold are classified as LOW"
+        },
+        "abstention_threshold": {
+          "type": "integer",
+          "default": 65,
+          "description": "Confidence scores below this value require system abstention"
+        }
+      },
+      "required": ["high_min", "medium_min", "low_max", "abstention_threshold"]
+    },
+    "abstention_required": {
+      "type": "boolean",
+      "description": "Flag indicating whether confidence is below threshold requiring the system to abstain from asserting a primary causal explanation",
+      "example": false
+    },
+    "abstention_reason": {
+      "type": "string",
+      "description": "Explicit reason provided when abstention is triggered",
+      "example": null
+    }
+  },
+  "required": [
+    "score",
+    "label",
+    "explanation",
+    "evidence_count",
+    "confidence_threshold",
+    "abstention_required"
+  ]
+}

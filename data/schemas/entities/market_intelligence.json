@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Market Intelligence Entity Schema",
+  "description": "Represents competitive price scrapes, commercial promotions, and third-party industry market reports.",
+  "type": "object",
+  "properties": {
+    "report_id": {
+      "type": "string",
+      "description": "Unique intelligence item ID",
+      "example": "MKT-INTEL-2026-0816"
+    },
+    "captured_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of market observation",
+      "example": "2026-08-16"
+    },
+    "competitor_name": {
+      "type": "string",
+      "description": "Monitored market competitor",
+      "example": "Horizon Foods Ltd."
+    },
+    "competing_product": {
+      "type": "string",
+      "description": "Competitor product line matching our SKU",
+      "example": "Horizon PurePro 500 (Alternative to SKU-8821)"
+    },
+    "target_geography": {
+      "type": "string",
+      "description": "Affected commercial market territory",
+      "example": "Mid-Atlantic & Southeast Corridor"
+    },
+    "promotional_action": {
+      "type": "string",
+      "description": "Observed commercial strategy",
+      "example": "15% Promotional Price Cut for Q3 Bulk Orders"
+    },
+    "observed_price_usd": {
+      "type": "number",
+      "description": "Discounted competitor price per unit",
+      "example": 102.0
+    },
+    "baseline_price_usd": {
+      "type": "number",
+      "description": "Standard market list price per unit",
+      "example": 120.0
+    },
+    "source_channel": {
+      "type": "string",
+      "description": "Scrape origin or intelligence agency",
+      "example": "Wholesale Channel Pricing Scraper & Field Agent Audits"
+    }
+  },
+  "required": [
+    "report_id",
+    "captured_date",
+    "competitor_name",
+    "target_geography",
+    "promotional_action",
+    "observed_price_usd",
+    "baseline_price_usd"
+  ]
+}

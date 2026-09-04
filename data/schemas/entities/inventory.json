@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Inventory Entity Schema",
+  "description": "Represents distribution center inventory snapshots and availability records in the ERP supply chain domain.",
+  "type": "object",
+  "properties": {
+    "snapshot_id": {
+      "type": "string",
+      "description": "Unique daily snapshot record identifier",
+      "example": "INV-SNAP-20260815-ATL01"
+    },
+    "snapshot_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of inventory reading",
+      "example": "2026-08-15"
+    },
+    "dc_location": {
+      "type": "string",
+      "description": "Distribution center code",
+      "example": "Atlanta-DC-01"
+    },
+    "region": {
+      "type": "string",
+      "description": "Geographic region served by DC",
+      "example": "NA-East"
+    },
+    "sku_id": {
+      "type": "string",
+      "description": "Stock Keeping Unit identifier",
+      "example": "SKU-8821"
+    },
+    "on_hand_units": {
+      "type": "integer",
+      "description": "Physical units physically present in DC",
+      "example": 3200
+    },
+    "available_units": {
+      "type": "integer",
+      "description": "Unallocated units available for immediate dispatch",
+      "example": 2100
+    },
+    "required_demand_units": {
+      "type": "integer",
+      "description": "Scheduled customer demand units for the day",
+      "example": 2900
+    },
+    "availability_percentage": {
+      "type": "number",
+      "description": "Calculated immediate fulfillment percentage",
+      "example": 72.41
+    },
+    "stockout_status": {
+      "type": "boolean",
+      "description": "True if available units fall below safety buffer",
+      "example": true
+    },
+    "reorder_in_transit_units": {
+      "type": "integer",
+      "description": "Units currently in transit from central manufacturing",
+      "example": 5000
+    }
+  },
+  "required": [
+    "snapshot_id",
+    "snapshot_date",
+    "dc_location",
+    "region",
+    "sku_id",
+    "on_hand_units",
+    "available_units",
+    "required_demand_units",
+    "availability_percentage"
+  ]
+}

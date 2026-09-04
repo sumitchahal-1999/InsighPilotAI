@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Margin Entity Schema",
+  "description": "Represents product-level and regional margin calculation records in ERP COPA (Controlling and Profitability Analysis).",
+  "type": "object",
+  "properties": {
+    "margin_record_id": {
+      "type": "string",
+      "description": "Unique margin analysis record identifier",
+      "example": "MRG-2026-Q3-SKU8821"
+    },
+    "fiscal_period": {
+      "type": "string",
+      "description": "Fiscal quarter / year period",
+      "example": "2026-Q3"
+    },
+    "region": {
+      "type": "string",
+      "description": "Commercial region",
+      "example": "NA-East"
+    },
+    "sku_id": {
+      "type": "string",
+      "description": "Stock Keeping Unit identifier",
+      "example": "SKU-8821"
+    },
+    "sales_revenue": {
+      "type": "number",
+      "description": "Gross invoiced sales in USD",
+      "example": 3720000.0
+    },
+    "cogs_material": {
+      "type": "number",
+      "description": "Direct bill of materials and component costs in USD",
+      "example": 1820000.0
+    },
+    "cogs_freight_expedited": {
+      "type": "number",
+      "description": "Emergency inter-DC freight and expedited logistics costs in USD",
+      "example": 455000.0
+    },
+    "total_cogs": {
+      "type": "number",
+      "description": "Total direct cost of goods sold in USD",
+      "example": 2275000.0
+    },
+    "gross_profit": {
+      "type": "number",
+      "description": "Sales revenue minus total COGS in USD",
+      "example": 1445000.0
+    },
+    "gross_margin_percentage": {
+      "type": "number",
+      "description": "Gross margin percentage (gross_profit / sales_revenue * 100)",
+      "example": 38.84
+    }
+  },
+  "required": [
+    "margin_record_id",
+    "fiscal_period",
+    "region",
+    "sku_id",
+    "sales_revenue",
+    "total_cogs",
+    "gross_profit",
+    "gross_margin_percentage"
+  ]
+}

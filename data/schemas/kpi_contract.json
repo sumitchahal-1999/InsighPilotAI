@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsightPilot AI — KPI Semantic Contract",
+  "description": "Formal semantic contract defining the 5 connected core KPIs, calculations, thresholds, drivers, and access rules.",
+  "version": "2.0.0",
+  "kpis": [
+    {
+      "id": "north_america_east_revenue",
+      "name": "North America East Revenue",
+      "business_definition": "Total recognized net invoiced sales across all customer tiers and product categories within the North America East commercial territory over the selected reporting period.",
+      "unit": "USD",
+      "calculation": "SUM(invoices.net_amount) WHERE region = 'NA-East' AND status = 'POSTED'",
+      "movement_calculation": "((current_period_value - previous_period_value) / previous_period_value) * 100",
+      "aggregation": "SUM",
+      "time_grain": "QUARTERLY",
+      "dimensions": [
+        "region",
+        "territory",
+        "customer_tier",
+        "product_family",
+        "sku_id",
+        "channel_type"
+      ],
+      "materiality_threshold": {
+        "warning_pct": -3.0,
+        "critical_pct": -5.0,
+        "primary_scenario_variance_pct": -8.0,
+        "explanation": "Any negative movement exceeding 5% triggers autonomous investigation pipeline."
+      },
+      "primary_drivers": [
+        "atlanta_dc_stockout",
+        "sku_8821_sales_volume",
+        "distributor_orders",
+        "competitor_horizon_pricing"
+      ],
+      "source_domain": "ERP",
+      "refresh_frequency": "HOURLY",
+      "lineage": {
+        "source_system": "ERP_SAP_S4HANA.FICO.BSEG",
+        "pipeline": "ETL.FinancialInvoicing -> DataMart.RegionalRevenue -> SemanticLayer.KPI_NA_EAST_REV",
+        "table_name": "fact_revenue"
+      },
+      "allowed_roles": [
+        "CFO",
+        "REGIONAL_SALES_MANAGER"
+      ]
+    },
+    {
+      "id": "gross_margin",
+      "name": "Gross Margin",
+      "business_definition": "Percentage of net sales revenue remaining after deducting the direct cost of goods sold (COGS), measuring commercial profitability.",
+      "unit": "PERCENTAGE",
+      "calculation": "((SUM(invoices.net_amount) - SUM(cogs.total_cost)) / SUM(invoices.net_amount)) * 100",
+      "movement_calculation": "current_period_margin_pct - previous_period_margin_pct",
+      "aggregation": "WEIGHTED_AVERAGE",
+      "time_grain": "QUARTERLY",
+      "dimensions": [
+        "region",
+        "product_line",
+        "sku_id",
+        "channel_type"
+      ],
+      "materiality_threshold": {
+        "target_pct": 42.5,
+        "warning_pct": 40.0,
+        "critical_pct": 39.0,
+        "explanation": "Gross margin below 39.0% indicates critical cost or pricing erosion."
+      },
+      "primary_drivers": [
+        "sku_8821_sales_volume",
+        "atlanta_dc_stockout",
+        "competitor_horizon_pricing"
+      ],
+      "source_domain": "ERP",
+      "refresh_frequency": "HOURLY",
+      "lineage": {
+        "source_system": "ERP_SAP_S4HANA.COPA",
+        "pipeline": "ETL.COGS_Aggregation -> DataMart.MarginAnalysis -> SemanticLayer.KPI_GROSS_MARGIN",
+        "table_name": "fact_margin"
+      },
+      "allowed_roles": [
+        "CFO"
+      ]
+    },
+    {
+      "id": "units_sold",
+      "name": "Units Sold",
+      "business_definition": "Total physical quantity of manufactured product units delivered, accepted, and recognized across all distribution channels in the region.",
+      "unit": "UNITS",
+      "calculation": "SUM(order_items.quantity_delivered) WHERE region = 'NA-East' AND delivery_status = 'DELIVERED'",
+      "movement_calculation": "((current_period_units - previous_period_units) / previous_period_units) * 100",
+      "aggregation": "SUM",
+      "time_grain": "MONTHLY",
+      "dimensions": [
+        "region",
+        "warehouse_id",
+        "distributor_id",
+        "product_family",
+        "sku_id"
+      ],
+      "materiality_threshold": {
+        "warning_pct": -4.0,
+        "critical_pct": -7.0,
+        "explanation": "Volume drops greater than 7% signal underlying fulfillment constraints or demand loss."
+      },
+      "primary_drivers": [
+        "atlanta_dc_stockout",
+        "sku_8821_sales_volume",
+        "distributor_orders"
+      ],
+      "source_domain": "CRM_SALES",
+      "refresh_frequency": "HOURLY",
+      "lineage": {
+        "source_system": "CRM_SALESFORCE.OrderItems",
+        "pipeline": "ETL.SalesFulfillment -> DataMart.VolumeMetrics -> SemanticLayer.KPI_UNITS_SOLD",
+        "table_name": "fact_sales_units"
+      },
+      "allowed_roles": [
+        "CFO",
+        "REGIONAL_SALES_MANAGER"
+      ]
+    },
+    {
+      "id": "distributor_orders",
+      "name": "Distributor Orders",
+      "business_definition": "Total count and aggregated purchase order commitments submitted by authorized regional distributors for wholesale delivery.",
+      "unit": "ORDER_COUNT",
+      "calculation": "COUNT(DISTINCT purchase_orders.po_id) WHERE region = 'NA-East' AND order_status IN ('SUBMITTED', 'CONFIRMED', 'FULFILLED')",
+      "movement_calculation": "((current_period_orders - previous_period_orders) / previous_period_orders) * 100",
+      "aggregation": "COUNT",
+      "time_grain": "WEEKLY",
+      "dimensions": [
+        "region",
+        "distributor_id",
+        "distributor_tier",
+        "order_type",
+        "payment_terms"
+      ],
+      "materiality_threshold": {
+        "warning_pct": -5.0,
+        "critical_pct": -10.0,
+        "explanation": "Order volume declines greater than 10% indicate channel hesitation or competitor displacement."
+      },
+      "primary_drivers": [
+        "distributor_orders",
+        "competitor_horizon_pricing",
+        "atlanta_dc_stockout"
+      ],
+      "source_domain": "CRM_SALES",
+      "refresh_frequency": "REALTIME",
+      "lineage": {
+        "source_system": "CRM_SALESFORCE.PurchaseOrders",
+        "pipeline": "ETL.ChannelPipeline -> DataMart.DistributorOrders -> SemanticLayer.KPI_DIST_ORDERS",
+        "table_name": "fact_distributor_orders"
+      },
+      "allowed_roles": [
+        "CFO",
+        "REGIONAL_SALES_MANAGER"
+      ]
+    },
+    {
+      "id": "inventory_availability",
+      "name": "Inventory Availability",
+      "business_definition": "Percentage of regional customer order demand that can be fulfilled immediately from on-hand Distribution Center (DC) inventory without backorders or cross-dock delays.",
+      "unit": "PERCENTAGE",
+      "calculation": "(SUM(dc_inventory.available_units) / SUM(dc_inventory.required_demand_units)) * 100",
+      "movement_calculation": "current_availability_pct - previous_availability_pct",
+      "aggregation": "RATIO",
+      "time_grain": "DAILY",
+      "dimensions": [
+        "region",
+        "dc_location",
+        "warehouse_id",
+        "product_line",
+        "sku_id"
+      ],
+      "materiality_threshold": {
+        "target_pct": 95.0,
+        "warning_pct": 88.0,
+        "critical_pct": 85.0,
+        "explanation": "DC availability below 85% causes immediate order fulfillment cancellations and downstream revenue loss."
+      },
+      "primary_drivers": [
+        "atlanta_dc_stockout"
+      ],
+      "source_domain": "ERP",
+      "refresh_frequency": "REALTIME",
+      "lineage": {
+        "source_system": "ERP_SAP_S4HANA.MM_WM",
+        "pipeline": "ETL.WarehouseStockFeed -> DataMart.SupplyChainAvailability -> SemanticLayer.KPI_INVENTORY_AVAIL",
+        "table_name": "fact_inventory_stock"
+      },
+      "allowed_roles": [
+        "CFO",
+        "REGIONAL_SALES_MANAGER"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsightPilot AI — Driver Semantic Contract",
+  "description": "Schema defining multi-factor explanatory drivers, contribution attribution, signals, and evidence links for North America East Revenue variance.",
+  "version": "2.0.0",
+  "drivers": [
+    {
+      "driver_id": "atlanta_dc_stockout",
+      "driver_name": "Atlanta DC Stockout",
+      "driver_type": "INTERNAL_OPERATIONAL",
+      "external_or_internal": "INTERNAL",
+      "controllability": "HIGH",
+      "affected_kpis": [
+        "north_america_east_revenue",
+        "inventory_availability",
+        "units_sold",
+        "gross_margin"
+      ],
+      "analytical_signal": {
+        "signal_metric": "DC Stock Availability %",
+        "observed_value": "72.0%",
+        "baseline_value": "95.0%",
+        "duration_days": 18,
+        "affected_facility": "DC-ATL-01"
+      },
+      "contribution": {
+        "percentage": 44.0,
+        "monetary_impact_usd": -528000.0,
+        "rank": 1
+      },
+      "confidence": {
+        "score": 94,
+        "label": "HIGH",
+        "methodology": "Linear Stockout-Demand Variance Decomposition"
+      },
+      "source_domain": "ERP",
+      "evidence_ids": [
+        "EVID_ERP_ATL_STOCKOUT_001",
+        "EVID_ERP_TRANSFER_LOG_002",
+        "EVID_ZENDESK_ATL_DELAY_003"
+      ]
+    },
+    {
+      "driver_id": "sku_8821_sales_volume",
+      "driver_name": "SKU-8821 Sales Volume Drop",
+      "driver_type": "INTERNAL_OPERATIONAL",
+      "external_or_internal": "INTERNAL",
+      "controllability": "MEDIUM",
+      "affected_kpis": [
+        "north_america_east_revenue",
+        "units_sold",
+        "gross_margin"
+      ],
+      "analytical_signal": {
+        "signal_metric": "SKU-8821 Unit Volume",
+        "observed_value": "31,000 units (-31.4%)",
+        "baseline_value": "45,200 units",
+        "affected_sku": "SKU-8821-HIGH-PERF"
+      },
+      "contribution": {
+        "percentage": 26.0,
+        "monetary_impact_usd": -312000.0,
+        "rank": 2
+      },
+      "confidence": {
+        "score": 89,
+        "label": "HIGH",
+        "methodology": "SKU-Level Margin Contribution Decomp"
+      },
+      "source_domain": "CRM_SALES",
+      "evidence_ids": [
+        "EVID_CRM_SKU8821_SALES_004",
+        "EVID_ERP_BOM_MARGIN_005"
+      ]
+    },
+    {
+      "driver_id": "distributor_orders",
+      "driver_name": "Distributor Orders Deferral",
+      "driver_type": "INTERNAL_OPERATIONAL",
+      "external_or_internal": "INTERNAL",
+      "controllability": "MEDIUM",
+      "affected_kpis": [
+        "north_america_east_revenue",
+        "distributor_orders",
+        "units_sold"
+      ],
+      "analytical_signal": {
+        "signal_metric": "Tier-1 PO Submission Rate",
+        "observed_value": "188 Orders (-21.7%)",
+        "baseline_value": "240 Orders",
+        "affected_channel": "Wholesale Distributor Network"
+      },
+      "contribution": {
+        "percentage": 18.0,
+        "monetary_impact_usd": -216000.0,
+        "rank": 3
+      },
+      "confidence": {
+        "score": 85,
+        "label": "HIGH",
+        "methodology": "Channel Purchase Order Lag Analysis"
+      },
+      "source_domain": "CRM_SALES",
+      "evidence_ids": [
+        "EVID_CRM_PO_DEF_006",
+        "EVID_COMM_DIST_EMAIL_007"
+      ]
+    },
+    {
+      "driver_id": "competitor_horizon_pricing",
+      "driver_name": "Competitor Horizon Foods Price Cut (-15%)",
+      "driver_type": "EXTERNAL_MARKET",
+      "external_or_internal": "EXTERNAL",
+      "controllability": "LOW",
+      "affected_kpis": [
+        "north_america_east_revenue",
+        "gross_margin",
+        "distributor_orders"
+      ],
+      "analytical_signal": {
+        "signal_metric": "Competitor Shelf Index & Wholesale Discount",
+        "observed_value": "15.0% price reduction across Mid-Atlantic",
+        "baseline_value": "Parity pricing ($120/unit vs $122/unit)",
+        "competitor_name": "Horizon Foods Ltd."
+      },
+      "contribution": {
+        "percentage": 12.0,
+        "monetary_impact_usd": -144000.0,
+        "rank": 4
+      },
+      "confidence": {
+        "score": 78,
+        "label": "MEDIUM",
+        "methodology": "Cross-Price Elasticity & Field Sentiment Scraping"
+      },
+      "source_domain": "SUPPORT_MARKET_INTEL",
+      "evidence_ids": [
+        "EVID_MKT_HORIZON_PROMO_008",
+        "EVID_ZENDESK_COMP_FEEDBACK_009"
+      ]
+    }
+  ]
+}

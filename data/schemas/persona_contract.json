@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsightPilot AI — Persona Contract",
+  "description": "Defines enterprise personas, access boundaries, preferred metrics, and tailored strategic actions.",
+  "version": "2.0.0",
+  "personas": [
+    {
+      "persona_id": "CFO",
+      "display_name": "Chief Financial Officer (CFO)",
+      "permitted_kpis": [
+        "north_america_east_revenue",
+        "gross_margin",
+        "units_sold",
+        "distributor_orders",
+        "inventory_availability"
+      ],
+      "permitted_data_domains": [
+        "ERP",
+        "CRM_SALES",
+        "SUPPORT_MARKET_INTEL"
+      ],
+      "preferred_metrics": [
+        "net_revenue",
+        "gross_margin_percentage",
+        "value_at_risk_usd",
+        "annualized_recovery_potential",
+        "capital_expenditure_impact"
+      ],
+      "preferred_actions": [
+        "Authorize Capex / emergency buffer budget",
+        "Review vendor SLA breach penalties",
+        "Approve quarterly revenue guidance revisions",
+        "Approve distributor contract rebate structure"
+      ],
+      "restricted_information": []
+    },
+    {
+      "persona_id": "REGIONAL_SALES_MANAGER",
+      "display_name": "Regional Sales Manager (NA-East)",
+      "permitted_kpis": [
+        "north_america_east_revenue",
+        "units_sold",
+        "distributor_orders",
+        "inventory_availability"
+      ],
+      "permitted_data_domains": [
+        "CRM_SALES",
+        "SUPPORT_MARKET_INTEL",
+        "ERP"
+      ],
+      "preferred_metrics": [
+        "inventory_availability_percentage",
+        "distributor_po_count",
+        "sku_8821_unit_volume",
+        "fulfillment_lag_days",
+        "distributor_escalation_sentiment"
+      ],
+      "preferred_actions": [
+        "Initiate emergency Charlotte-to-Atlanta DC stock transfer",
+        "Execute distributor outreach and delivery commitments",
+        "Apply temporary 5% volume rebate on Tier-1 orders",
+        "Expedite customer backorders"
+      ],
+      "restricted_information": [
+        "Executive COGS standard cost margin detail",
+        "Corporate executive compensation models",
+        "Confidential mergers & acquisition intelligence"
+      ]
+    }
+  ]
+}

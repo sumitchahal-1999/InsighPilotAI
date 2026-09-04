@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsightPilot AI — Evidence Record Contract",
+  "description": "Contract defining atomic evidence nodes linking quantitative drivers and KPI movements to verified enterprise source records.",
+  "version": "2.0.0",
+  "type": "object",
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "description": "Unique evidence node identifier",
+      "example": "EVID_ERP_ATL_STOCKOUT_001"
+    },
+    "source": {
+      "type": "string",
+      "description": "Originating enterprise system name",
+      "example": "SAP S/4HANA Supply Chain Logistics"
+    },
+    "source_record_id": {
+      "type": "string",
+      "description": "Identifier of the record in the source system",
+      "example": "INV-SNAP-20260815-ATL01"
+    },
+    "source_domain": {
+      "type": "string",
+      "enum": ["ERP", "CRM_SALES", "SUPPORT_MARKET_INTEL"],
+      "description": "Enterprise data domain",
+      "example": "ERP"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time when the source event occurred",
+      "example": "2026-08-15T08:00:00Z"
+    },
+    "freshness": {
+      "type": "object",
+      "properties": {
+        "age_hours": {
+          "type": "number",
+          "description": "Elapsed hours between event occurrence and ingestion",
+          "example": 2.5
+        },
+        "status": {
+          "type": "string",
+          "enum": ["LIVE", "RECENT", "STALE"],
+          "description": "Data freshness classification",
+          "example": "LIVE"
+        }
+      },
+      "required": ["age_hours", "status"]
+    },
+    "evidence_type": {
+      "type": "string",
+      "enum": [
+        "TELEMETRY_LOG",
+        "TRANSACTION_RECORD",
+        "CUSTOMER_SIGNAL",
+        "COMMUNICATION_EXTRACT",
+        "MARKET_OBSERVATION"
+      ],
+      "description": "Category of evidence record",
+      "example": "TELEMETRY_LOG"
+    },
+    "analytical_method": {
+      "type": "string",
+      "description": "Mathematical algorithm or extraction method used to generate this evidence",
+      "example": "Warehouse Stockout Duration & Demand Gap Analysis"
+    },
+    "contribution": {
+      "type": "object",
+      "properties": {
+        "percentage": {
+          "type": "number",
+          "description": "Contribution percentage to target driver",
+          "example": 44.0
+        },
+        "monetary_impact_usd": {
+          "type": "number",
+          "description": "Quantified monetary impact",
+          "example": -528000.0
+        }
+      },
+      "required": ["percentage", "monetary_impact_usd"]
+    },
+    "confidence": {
+      "type": "object",
+      "properties": {
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Confidence score for this evidence item",
+          "example": 94
+        },
+        "label": {
+          "type": "string",
+          "enum": ["HIGH", "MEDIUM", "LOW"],
+          "description": "Qualitative confidence band",
+          "example": "HIGH"
+        }
+      },
+      "required": ["score", "label"]
+    },
+    "supports_driver": {
+      "type": "string",
+      "description": "Identifier of the driver this evidence substantiates",
+      "example": "atlanta_dc_stockout"
+    },
+    "supports_kpi": {
+      "type": "string",
+      "description": "Identifier of the target KPI",
+      "example": "north_america_east_revenue"
+    },
+    "lineage": {
+      "type": "object",
+      "properties": {
+        "source_table": {
+          "type": "string",
+          "description": "Source table or API endpoint",
+          "example": "sap_mm_inventory_snapshots"
+        },
+        "pipeline_job_id": {
+          "type": "string",
+          "description": "ETL batch or streaming job ID",
+          "example": "JOB_STOCK_FEED_20260815_01"
+        },
+        "verification_hash": {
+          "type": "string",
+          "description": "Cryptographic audit hash verifying immutability",
+          "example": "sha256:7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
+        }
+      },
+      "required": ["source_table", "pipeline_job_id"]
+    }
+  },
+  "required": [
+    "evidence_id",
+    "source",
+    "source_record_id",
+    "source_domain",
+    "timestamp",
+    "freshness",
+    "evidence_type",
+    "analytical_method",
+    "contribution",
+    "confidence",
+    "supports_driver",
+    "supports_kpi",
+    "lineage"
+  ]
+}

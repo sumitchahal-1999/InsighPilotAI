@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsightPilot AI — What-If Simulation Contract",
+  "description": "Defines input parameters, deterministic projection outputs, and assumption structures for the what-if simulation engine.",
+  "version": "2.0.0",
+  "type": "object",
+  "properties": {
+    "simulation_id": {
+      "type": "string",
+      "description": "Unique identifier for the simulation execution run",
+      "example": "SIM-RUN-2026-ATL-091"
+    },
+    "simulation_name": {
+      "type": "string",
+      "description": "Descriptive title of the simulated scenario",
+      "example": "Atlanta DC Inventory Restoration & Volume Rebate Impact"
+    },
+    "input_variable": {
+      "type": "string",
+      "description": "Controllable operational or commercial parameter being adjusted",
+      "example": "inventory_availability"
+    },
+    "target_facility_or_scope": {
+      "type": "string",
+      "description": "Geographic or operational boundary of the simulation",
+      "example": "Atlanta DC (DC-ATL-01) / NA-East"
+    },
+    "baseline_value": {
+      "type": "number",
+      "description": "Current observed baseline state before intervention",
+      "example": 72.0
+    },
+    "scenario_value": {
+      "type": "number",
+      "description": "Target slider value selected by the user",
+      "example": 90.0
+    },
+    "projected_metric": {
+      "type": "string",
+      "description": "Primary output KPI receiving projected recovery",
+      "example": "north_america_east_revenue"
+    },
+    "projected_value": {
+      "type": "number",
+      "description": "Estimated new KPI value under simulated conditions",
+      "example": 14585000.0
+    },
+    "estimated_recovery": {
+      "type": "object",
+      "properties": {
+        "revenue_recovery_usd": {
+          "type": "number",
+          "description": "Estimated monetary revenue recovery",
+          "example": 385000.0
+        },
+        "margin_recovery_pct": {
+          "type": "number",
+          "description": "Projected gross margin percentage improvement",
+          "example": 1.4
+        },
+        "recovery_timeframe_days": {
+          "type": "integer",
+          "description": "Estimated elapsed days required to realize projected impact",
+          "example": 14
+        }
+      },
+      "required": [
+        "revenue_recovery_usd",
+        "margin_recovery_pct",
+        "recovery_timeframe_days"
+      ]
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Explicit mathematical and operational assumptions governing the deterministic model",
+      "example": [
+        "Inter-DC stock transfer of 18,500 units from Charlotte completes within 72 hours",
+        "Unmet customer order demand remains recapturable with zero permanent brand substitution",
+        "Tier-1 distributor re-order elasticity is 0.85 relative to stock availability",
+        "Direct emergency freight cost modeled at $24,500"
+      ]
+    },
+    "confidence": {
+      "type": "object",
+      "properties": {
+        "score": {
+          "type": "integer",
+          "example": 88
+        },
+        "label": {
+          "type": "string",
+          "enum": ["HIGH", "MEDIUM", "LOW"],
+          "example": "HIGH"
+        }
+      },
+      "required": ["score", "label"]
+    }
+  },
+  "required": [
+    "simulation_id",
+    "simulation_name",
+    "input_variable",
+    "baseline_value",
+    "scenario_value",
+    "projected_metric",
+    "projected_value",
+    "estimated_recovery",
+    "assumptions",
+    "confidence"
+  ]
+}

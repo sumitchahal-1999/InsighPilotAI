@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Distributor Order Entity Schema",
+  "description": "Represents wholesale purchase order commitments and fulfillment tracking from authorized distributors.",
+  "type": "object",
+  "properties": {
+    "po_id": {
+      "type": "string",
+      "description": "Distributor Purchase Order number",
+      "example": "PO-DIST-2026-0811"
+    },
+    "order_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date purchase order was issued",
+      "example": "2026-08-11"
+    },
+    "region": {
+      "type": "string",
+      "description": "Commercial region",
+      "example": "NA-East"
+    },
+    "distributor_id": {
+      "type": "string",
+      "description": "Authorized wholesale distributor ID",
+      "example": "DIST-EAST-ATL"
+    },
+    "distributor_tier": {
+      "type": "string",
+      "enum": ["TIER_1_STRATEGIC", "TIER_2_REGIONAL", "TIER_3_LOCAL"],
+      "description": "Commercial tier classification of distributor",
+      "example": "TIER_1_STRATEGIC"
+    },
+    "total_order_value": {
+      "type": "number",
+      "description": "Aggregate order amount in USD",
+      "example": 350000.0
+    },
+    "order_status": {
+      "type": "string",
+      "enum": ["SUBMITTED", "CONFIRMED", "DEFERRED", "CANCELLED", "FULFILLED"],
+      "description": "Current processing status of the PO",
+      "example": "DEFERRED"
+    },
+    "deferral_reason": {
+      "type": "string",
+      "description": "Distributor provided explanation if order is deferred",
+      "example": "Stock availability uncertainty at Atlanta DC"
+    },
+    "expected_delivery_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Target delivery fulfillment date",
+      "example": "2026-08-25"
+    }
+  },
+  "required": [
+    "po_id",
+    "order_date",
+    "region",
+    "distributor_id",
+    "distributor_tier",
+    "total_order_value",
+    "order_status"
+  ]
+}

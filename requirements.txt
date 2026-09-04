@@ -1,0 +1,13 @@
+# InsightPilot AI — Foundational Python Dependencies
+# Dependencies are introduced incrementally during their respective implementation steps.
+
+python-dotenv>=1.0.0
+fastapi>=0.115.0
+uvicorn>=0.34.0
+pydantic>=2.10.0
+httpx>=0.28.0
+google-genai>=0.1.0
+groq>=0.18.0
+langgraph>=1.2.0
+sqlalchemy>=2.0.36
+alembic>=1.14.0

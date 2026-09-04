@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsightPilot AI — Role-Based Access Control (RBAC) Contract",
+  "description": "Defines resource-level permissions and access policies for enterprise roles in the prototype.",
+  "version": "2.0.0",
+  "roles": [
+    {
+      "role": "CFO",
+      "description": "Executive level financial officer with comprehensive visibility across financial, operational, and commercial telemetry.",
+      "permissions": [
+        {
+          "resource": "kpi.north_america_east_revenue",
+          "access": ["read", "view_financial", "view_sensitive"]
+        },
+        {
+          "resource": "kpi.gross_margin",
+          "access": ["read", "view_financial", "view_sensitive"]
+        },
+        {
+          "resource": "kpi.units_sold",
+          "access": ["read", "view_operational"]
+        },
+        {
+          "resource": "kpi.distributor_orders",
+          "access": ["read", "view_operational"]
+        },
+        {
+          "resource": "kpi.inventory_availability",
+          "access": ["read", "view_operational"]
+        },
+        {
+          "resource": "domain.ERP",
+          "access": ["read", "view_financial", "view_sensitive"]
+        },
+        {
+          "resource": "domain.CRM_SALES",
+          "access": ["read", "view_operational"]
+        },
+        {
+          "resource": "domain.SUPPORT_MARKET_INTEL",
+          "access": ["read", "view_operational", "view_sensitive"]
+        },
+        {
+          "resource": "actions.strategic_authorization",
+          "access": ["execute"]
+        }
+      ]
+    },
+    {
+      "role": "REGIONAL_SALES_MANAGER",
+      "description": "Regional operational leader with deep visibility into regional distribution, accounts, inventory, and sales orders.",
+      "permissions": [
+        {
+          "resource": "kpi.north_america_east_revenue",
+          "access": ["read", "view_operational"]
+        },
+        {
+          "resource": "kpi.gross_margin",
+          "access": ["denied"]
+        },
+        {
+          "resource": "kpi.units_sold",
+          "access": ["read", "view_operational"]
+        },
+        {
+          "resource": "kpi.distributor_orders",
+          "access": ["read", "view_operational"]
+        },
+        {
+          "resource": "kpi.inventory_availability",
+          "access": ["read", "view_operational"]
+        },
+        {
+          "resource": "domain.ERP",
+          "access": ["read_restricted_operational_only"]
+        },
+        {
+          "resource": "domain.CRM_SALES",
+          "access": ["read", "view_operational"]
+        },
+        {
+          "resource": "domain.SUPPORT_MARKET_INTEL",
+          "access": ["read", "view_operational"]
+        },
+        {
+          "resource": "actions.operational_transfer",
+          "access": ["execute"]
+        }
+      ]
+    }
+  ]
+}

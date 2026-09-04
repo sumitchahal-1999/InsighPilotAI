@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Distributor Communication Entity Schema",
+  "description": "Represents structured extracts from distributor email threads, commercial notices, and field partner communications.",
+  "type": "object",
+  "properties": {
+    "comm_id": {
+      "type": "string",
+      "description": "Unique communication record ID",
+      "example": "COMM-EMAIL-2026-0814"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of email/notice transmission",
+      "example": "2026-08-14T09:15:00Z"
+    },
+    "sender": {
+      "type": "string",
+      "description": "Sender email or executive name",
+      "example": "procurement@apexdistributors.com"
+    },
+    "recipient": {
+      "type": "string",
+      "description": "Internal account representative",
+      "example": "regional_sales_east@insightpilot.corp"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Email subject header",
+      "example": "Holding Q3 re-orders pending Atlanta stock resolution & competitor pricing match"
+    },
+    "key_extracted_claims": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Structured NLP factual extractions from message body",
+      "example": [
+        "Holding 24,000 unit order for SKU-8821",
+        "Competitor Horizon Foods offering 15% discount on equivalent line"
+      ]
+    },
+    "urgency": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"],
+      "description": "Commercial urgency rating",
+      "example": "HIGH"
+    }
+  },
+  "required": [
+    "comm_id",
+    "sent_at",
+    "sender",
+    "subject",
+    "key_extracted_claims",
+    "urgency"
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsightPilot AI — Investigation Result Contract",
+  "description": "Structured schema representing the complete analytical output emitted by the deterministic analytics engine for UI rendering and LLM narrative grounding.",
+  "version": "2.0.0",
+  "type": "object",
+  "properties": {
+    "investigation_id": {
+      "type": "string",
+      "description": "Unique investigation execution identifier",
+      "example": "INV-EXEC-2026-NAE-001"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Execution completion timestamp",
+      "example": "2026-08-22T17:30:00Z"
+    },
+    "persona_id": {
+      "type": "string",
+      "enum": ["CFO", "REGIONAL_SALES_MANAGER"],
+      "description": "Target enterprise persona requesting the investigation",
+      "example": "CFO"
+    },
+    "kpi": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "north_america_east_revenue"
+        },
+        "name": {
+          "type": "string",
+          "example": "North America East Revenue"
+        },
+        "current_value": {
+          "type": "number",
+          "example": 14200000.0
+        },
+        "previous_value": {
+          "type": "number",
+          "example": 15400000.0
+        },
+        "variance_amount": {
+          "type": "number",
+          "example": -1200000.0
+        },
+        "percent_change": {
+          "type": "number",
+          "example": -8.0
+        },
+        "materiality_status": {
+          "type": "string",
+          "enum": ["CRITICAL_NEGATIVE_VARIANCE", "WARNING", "NOMINAL"],
+          "example": "CRITICAL_NEGATIVE_VARIANCE"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "current_value",
+        "previous_value",
+        "variance_amount",
+        "percent_change",
+        "materiality_status"
+      ]
+    },
+    "drivers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "driver_id": {
+            "type": "string",
+            "example": "atlanta_dc_stockout"
+          },
+          "driver_name": {
+            "type": "string",
+            "example": "Atlanta DC Stockout"
+          },
+          "contribution_pct": {
+            "type": "number",
+            "example": 44.0
+          },
+          "impact_usd": {
+            "type": "number",
+            "example": -528000.0
+          },
+          "confidence_score": {
+            "type": "integer",
+            "example": 94
+          },
+          "rank": {
+            "type": "integer",
+            "example": 1
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "example": [
+              "EVID_ERP_ATL_STOCKOUT_001",
+              "EVID_ERP_TRANSFER_LOG_002",
+              "EVID_ZENDESK_ATL_DELAY_003"
+            ]
+          }
+        },
+        "required": [
+          "driver_id",
+          "driver_name",
+          "contribution_pct",
+          "impact_usd",
+          "confidence_score",
+          "rank",
+          "evidence_ids"
+        ]
+      }
+    },
+    "evidence_summary": {
+      "type": "object",
+      "properties": {
+        "evidence_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "example": [
+            "EVID_ERP_ATL_STOCKOUT_001",
+            "EVID_ERP_TRANSFER_LOG_002",
+            "EVID_ZENDESK_ATL_DELAY_003",
+            "EVID_CRM_SKU8821_SALES_004",
+            "EVID_CRM_PO_DEF_006",
+            "EVID_MKT_HORIZON_PROMO_008"
+          ]
+        },
+        "source_count": {
+          "type": "integer",
+          "example": 3
+        },
+        "source_domains": {
+          "type": "array",
+          "items": { "type": "string" },
+          "example": ["ERP", "CRM_SALES", "SUPPORT_MARKET_INTEL"]
+        }
+      },
+      "required": ["evidence_ids", "source_count", "source_domains"]
+    },
+    "overall": {
+      "type": "object",
+      "properties": {
+        "overall_confidence": {
+          "type": "integer",
+          "example": 91
+        },
+        "confidence_label": {
+          "type": "string",
+          "enum": ["HIGH", "MEDIUM", "LOW"],
+          "example": "HIGH"
+        },
+        "abstention": {
+          "type": "boolean",
+          "example": false
+        },
+        "abstention_reason": {
+          "type": "string",
+          "example": null
+        }
+      },
+      "required": ["overall_confidence", "confidence_label", "abstention"]
+    },
+    "lineage_graph": {
+      "type": "object",
+      "properties": {
+        "kpi_node": { "type": "string", "example": "north_america_east_revenue" },
+        "driver_nodes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "example": [
+            "atlanta_dc_stockout",
+            "sku_8821_sales_volume",
+            "distributor_orders",
+            "competitor_horizon_pricing"
+          ]
+        },
+        "evidence_nodes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "example": [
+            "EVID_ERP_ATL_STOCKOUT_001",
+            "EVID_CRM_SKU8821_SALES_004",
+            "EVID_CRM_PO_DEF_006",
+            "EVID_MKT_HORIZON_PROMO_008"
+          ]
+        }
+      },
+      "required": ["kpi_node", "driver_nodes", "evidence_nodes"]
+    }
+  },
+  "required": [
+    "investigation_id",
+    "timestamp",
+    "persona_id",
+    "kpi",
+    "drivers",
+    "evidence_summary",
+    "overall",
+    "lineage_graph"
+  ]
+}

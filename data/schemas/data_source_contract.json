@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsightPilot AI — Enterprise Data Source Contract",
+  "description": "Defines enterprise data sources across ERP, CRM/Sales, and Support/Market Intelligence domains for the prototype simulation.",
+  "version": "2.0.0",
+  "sources": [
+    {
+      "source_id": "SRC_ERP_SAP",
+      "source_name": "SAP S/4HANA Enterprise Financials & Supply Chain",
+      "source_domain": "ERP",
+      "source_type": "RELATIONAL_SQL",
+      "data_owner": "Corporate Finance & Supply Chain Logistics",
+      "refresh_frequency": "HOURLY",
+      "expected_latency_ms": 120,
+      "supported_entities": [
+        "revenue",
+        "inventory",
+        "margin"
+      ],
+      "supported_kpis": [
+        "north_america_east_revenue",
+        "gross_margin",
+        "inventory_availability"
+      ],
+      "sensitivity": "CONFIDENTIAL_FINANCIAL",
+      "allowed_roles": [
+        "CFO",
+        "REGIONAL_SALES_MANAGER"
+      ]
+    },
+    {
+      "source_id": "SRC_CRM_SALESFORCE",
+      "source_name": "Salesforce Sales Cloud & Distributor Portal",
+      "source_domain": "CRM_SALES",
+      "source_type": "REST_API_AND_EVENTS",
+      "data_owner": "Commercial Operations & Regional Sales",
+      "refresh_frequency": "REALTIME",
+      "expected_latency_ms": 180,
+      "supported_entities": [
+        "sales",
+        "distributor_order"
+      ],
+      "supported_kpis": [
+        "units_sold",
+        "distributor_orders",
+        "north_america_east_revenue"
+      ],
+      "sensitivity": "INTERNAL_COMMERCIAL",
+      "allowed_roles": [
+        "CFO",
+        "REGIONAL_SALES_MANAGER"
+      ]
+    },
+    {
+      "source_id": "SRC_SUPPORT_MKT_INTEL",
+      "source_name": "Zendesk Service Desk & Market Intelligence Scraper",
+      "source_domain": "SUPPORT_MARKET_INTEL",
+      "source_type": "UNSTRUCTURED_AND_SCRAPED",
+      "data_owner": "Customer Support Operations & Strategic Pricing",
+      "refresh_frequency": "DAILY",
+      "expected_latency_ms": 350,
+      "supported_entities": [
+        "support_ticket",
+        "distributor_communication",
+        "market_intelligence"
+      ],
+      "supported_kpis": [
+        "north_america_east_revenue",
+        "distributor_orders"
+      ],
+      "sensitivity": "INTERNAL_UNSTRUCTURED",
+      "allowed_roles": [
+        "CFO",
+        "REGIONAL_SALES_MANAGER"
+      ]
+    }
+  ]
+}
